@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二手車網站</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+    <style>
+        /* Add your custom styles here */
+        .search-form {
+            border: 1px solid #ddd; /* 加入邊框樣式 */
+            padding: 15px; /* 加入內部間距 */
+            border-radius: 5px; /* 圓角 */
+        }
+    </style>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Bootstrap JavaScript (including Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+
+    <!-- Your custom JavaScript -->
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+</head>
+   
+<body class="d-flex justify-content-center">
+    <div class="container mt-5">
+        <!-- 導覽列 -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">二手車網站</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">首頁</a>
+                    </li>
+                    <!-- 我要賣車 -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSellForm()">我要賣車（填表單）</a>
+                    </li>
+                    
+                    <!-- 買車搜尋 -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSellForm()">買車搜尋</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showLoginForm()">登入</a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+
+        
+        
+        <div id="loginForm" class="form-container" style="display: none;">
+            <h2>登入</h2>
+            <form>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Email address</label>
+                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="mb-3 form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                  <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+
+       
+
+        <!-- 註冊表單 -->
+        <div id="registerForm" class="form-container" style="display: none;">
+            <h2>註冊</h2>
+            <form>
+                <!-- 註冊表單的元素 -->
+                <label for="newUsername">新使用者名稱:</label>
+                <input type="text" id="newUsername" name="newUsername" required>
+                <br>
+                <label for="newPassword">新密碼:</label>
+                <input type="password" id="newPassword" name="newPassword" required>
+                <br>
+                <button type="button" id="registerBtn" onclick="register()">註冊</button>
+            </form>
+        </div>
+
+        
+
+        <!-- 搜尋表單 -->
+        <form id="searchForm" class="mt-8 search-form">
+            <div class="row">
+                <div class="col-md-2.5">
+                    <label for="brand">廠牌:</label>
+                    <select class="form-control" id="brand" name="brand">
+                        <!-- 品牌選項 -->
+                        <option value="Mercedes-Benz">M-Benz</option>
+                        <option value="BMW">BMW</option>
+                        <option value="Toyota">Toyota</option>
+                        <option value="Honda">Honda</option>
+                        <option value="Ford">Ford</option>
+                    </select>
+                </div>
+                <div class="col-md-2.5">
+                    <label for="model">車型:</label>
+                    <select class="form-control" id="model" name="model">
+                        <!-- 車型選項 -->
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div class="col-md-2.5">
+                    <label for="price">價格:</label>
+                    <select class="form-control" id="price" name="price">
+                        <!-- 價格選項 -->
+                        <option value="0-1000000">100萬以下</option>
+                        <option value="1000000-2000000">100-200萬</option>
+                        <option value="2000000-3000000">200-300萬</option>
+                        <option value="3000000-4000000">300-400萬</option>
+                        <option value="4000000-5000000">400-500萬</option>
+                        <option value="5000000-6000000">500-600萬</option>
+                        <option value="6000000-7000000">600-700萬</option>
+                        <option value="7000000-8000000">700-800萬</option>
+                        <option value="8000000-9000000">800-900萬</option>
+                        <option value="9000000-10000000">900-1000萬</option>
+                        <option value="10000000-20000000">1000萬以上</option>
+                        <!-- 其他價格範圍選項 -->
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2.5">
+                <button type="submit" class="btn btn-primary mt-3">搜尋</button>
+            </div>
+        </form>
+
+        <!-- 輪播 -->
+        <div id="carouselExample" class="carousel slide mb-4" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://placekitten.com/1200/400" class="d-block w-100" alt="Image 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://placekitten.com/1200/401" class="d-block w-100" alt="Image 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://placekitten.com/1200/402" class="d-block w-100" alt="Image 3">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <!-- 在 <body> 部分的適當位置加入這個 div -->
+        <!-- 在 <div id="onlineFormPage"> 中的線上表單部分加入以下內容 -->
+
+        <div id="onlineFormPage" style="display: none;">
+            <h3>線上填表單</h3>
+            <form id="sellForm">
+                <!-- ... 其他表單元素 ... -->
+                <div class="mb-3">
+                    <label for="name" class="form-label">姓名:</label>
+                    <input type="text" class="form-control" id="name" name="name" >
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">電話:</label>
+                    <input type="text" class="form-control" id="phone" name="phone" >
+                </div>
+
+                <div class="mb-3">
+                    <label for="brand" class="form-label">廠牌:</label>
+                    <input type="text" class="form-control" id="brand" name="brand" list="brandList">
+                    <datalist id="brandList">
+                        <!-- 廠牌選項 -->
+                        <option value="M-Benz">
+                        <option value="Toyota">
+                        <!-- 其他廠牌選項 -->
+                    </datalist>
+                </div>
+
+        <div class="mb-3">
+            <label for="model" class="form-label">車型:</label>
+            <input type="text" class="form-control" id="model" name="model" list="modelList">
+            <datalist id="modelList">
+                <!-- 車型選項 -->
+                <option value="GLC200 Coupe 2.0L">
+                <option value="Camry">
+                <!-- 其他車型選項 -->
+            </datalist>
+        </div>
+
+        <div class="mb-3">
+            <label for="year" class="form-label">年份:</label>
+            <input type="text" class="form-control" id="year" name="year" list="yearList">
+            <datalist id="yearList">
+                <!-- 年份選項 -->
+                <option value="2020">
+                <option value="2015">
+                <!-- 其他年份選項 -->
+            </datalist>
+        </div>
+
+        <div class="mb-3">
+            <label for="mileage" class="form-label">里程數(萬):</label>
+            <input type="text" class="form-control" id="mileage" name="mileage" required>
+        </div>
+
+        <button type="button" onclick="submitOnlineForm()" class="btn btn-primary">提交</button>
+    </form>
+</div>
+
+
+        <!-- 添加一個用於顯示搜索結果的區域 -->
+        <div id="searchResults" class="container mt-5" style="display: none;">
+            <h3 class="mb-4">搜尋結果</h3>
+            <div id="resultsContainer" class="row">
+                <!-- 搜尋結果將在這裡顯示 -->
+            </div>
+        </div>
+
+        <!-- 車輛列表部分 -->
+        <section id="carList" class="mt-5">
+            <!-- 車輛列表的部分 -->
+            <!-- ... -->
+        </section>
+
+        <!-- 頁尾 -->
+        <footer class="mt-5">
+            <p>&copy; 2023 二手車網站</p>
+        </footer>
+    </div>
+</body>
+</html>

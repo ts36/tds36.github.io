@@ -1,0 +1,71 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 1em;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar, .navigation {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+}
+
+.navbar li, .navigation li {
+    margin: 0 1em;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+
+.show {
+    display: block;
+}
+
+.dropdown-btn {
+    cursor: pointer;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#search-form-container {
+    text-align: center;
+    margin: 50px auto; /* 調整上下和左右的 margin 以達到居中效果 */
+    max-width: 1000px; /* 設定最大寬度，防止在大屏幕上擴展太寬 */
+}
+
+.search-box {
+    border: 2.5px solid #9D9D9D; /* 框線樣式和顏色 */
+    padding: 20px; /* 內邊距，使框線與內容之間有空間 */
+}
+
+
